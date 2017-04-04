@@ -1,0 +1,28 @@
+// classes example
+#include <iostream>
+#include "myTemplate.h"
+using namespace std;
+
+//Constructor
+template<class a_type> cube<a_type>::cube(a_type x, a_type y, a_type z) : L(x), B(y), H(z) {
+	cout << "Object being build." << endl;
+}
+
+//Member function definition
+template<class a_type> a_type cube<a_type>::area() {
+	return 2*L*B + 2*L*H + 2*B*H;
+}
+
+template<class a_type> a_type cube<a_type>::volume() {
+	return L*B*H;
+}
+
+//Main function
+int main() {
+
+cube<int> willCube(1,1,1);
+
+cout << "The area is: " << willCube.area() << endl;
+cout << "The volume is: " << willCube.volume() << endl;
+return 0;
+}
