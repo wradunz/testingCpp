@@ -1,50 +1,57 @@
-// classes example
-#include <iostream>
+#include <iostream> 
 using namespace std;
-
-//Now let's make a template:
-
-class cube {
-	public: //why we use public?
-	//cube (int x1, int x2, int x3) : L(x1), B(x2), H(x3) { }
-	int area ();
-	int volume ();
-	cube(int x, int y, int z);
-	//Private exists because, probably, the compiler checks the return of the member functions. If the class inner variables are not previously defined, compiler will say: "In member function ‘int cube::volume(int, int, int)’: noTemplate.C:27:2: error: ‘L’ was not declared in this scope L = x; B = y; H = z;"
-
-	private:
-	int L, B, H;
+ 
+class Shape {
+   protected:
+      int width, height;
+		
+   public:
+      Shape( int a = 0, int b = 0) {
+         width = a;
+         height = b;
+      }
+		
+      virtual int area() { //we dont want static link to this function
+         cout << "Parent class area :" <<endl;
+         return 0;
+      }
 };
-/*
-//Constructor
-cube::cube(int x, int y, int z) {
-	L = x; B = y; H = z;
-	cout << "Object being build." << endl;
-}
-*/
-//which is the same as:
-cube::cube(int x, int y, int z) : L(x), B(y), H(z) {
-	cout << "Object being build." << endl;
-}
 
+class Rectangle: public Shape {
+   public:
+      Rectangle( int a = 0, int b = 0):Shape(a, b) { }
+      int area () { 
+         cout << "Rectangle class area :" <<endl;
+         return (width * height); 
+      }
+};
 
-//Member function definition
-int cube::area() {
-	//L = x; B = y; H = z;
-	return 2*L*B + 2*L*H + 2*B*H;
-}
+class Triangle: public Shape{
+   public:
+      Triangle( int a = 0, int b = 0):Shape(a, b) { }
+      int area () { 
+         cout << "Triangle class area :" <<endl;
+         return (width * height / 2); 
+      }
+};
 
-int cube::volume() {
-	//L = x; B = y; H = z;	
-	return L*B*H;
-}
+// Main function for the program
+int main( ) {
+   Shape *shape;
+   Rectangle rec(10,7);
+   Triangle  tri(10,5);
 
-//Main function
-int main() {
+   // store the address of Rectangle
+   shape = &rec;
+	
+   // call rectangle area.
+   shape->area();
 
-cube willCube(1,1,1);
+   // store the address of Triangle
+   shape = &tri;
+	
+   // call triangle area.
+   shape->area();
 
-cout << "The area is: " << willCube.area() << endl;
-cout << "The volume is: " << willCube.volume() << endl;
-return 0;
+   return 0;
 }
